@@ -29,7 +29,7 @@ Also the term and concepts were selected based in my own criteria and necessity 
 - The net result of the spin of neutrons and protons corresponds to the spin of the atomic nucleus.
 - In normal conditions, the hydrogen nucleus have different orientations around our body.
 
-<img src="MRIImages/mri_flow_base.png" width=150 style="background-color:white"/>
+<img src="MRIImages/mri_flow_protons.png" width=150 style="background-color:white"/>
 
 The hydrogen nucleus and their spin are the principal key on how these machines work.
 From now on we will call $\color{orange}{\textsf{proton}}$ to the **hydrogen nucleus** to simplify the term. This is the naming convention that can be found in technical literatures.

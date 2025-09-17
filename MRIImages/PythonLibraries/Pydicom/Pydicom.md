@@ -233,7 +233,7 @@ As in common computer vision image classification problems, we can process the s
 
 This option consumes less GPU but losses features about the context.
 
-<img src="PydicomImages/mri_process_opt_2D.png" width=150 style="background-color:white; margin-left:40" />
+<img src="PydicomImages/mri_process_opt_2D.png" width=150 style="background-color:white" />
 
 
 #### Dataset Example
@@ -348,7 +348,7 @@ Is possible to stack the images to work with the volumetric representation. Like
 
 This is more GPU demanding but preserve more information.
 
-<img src="PydicomImages/mri_process_opt_3D.png" width=150 style="background-color:white; margin-left:40"/>
+<img src="PydicomImages/mri_process_opt_3D.png" width=150 style="background-color:white"/>
 
 #### Dataset Example
 For a csv with labels like:
@@ -472,7 +472,7 @@ Any variance respect to the 3D volume processing is called 2.5D, as some informa
 
 In the image below, are selected only the most relevant slices so we do not have the complete volume, but by doing this we are reducing noise. Also, the axial view is included to add more information. This changes are made to achieve a better balance between GPU demand and information preservation.
 
-<img src="PydicomImages/mri_process_opt_25D.png" width=370 style="background-color:white; margin-left:40"/>
+<img src="PydicomImages/mri_process_opt_25D.png" width=370 style="background-color:white"/>
 
 
 
