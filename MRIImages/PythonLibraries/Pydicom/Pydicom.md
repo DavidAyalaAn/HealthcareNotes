@@ -4,16 +4,16 @@
 # 01 MRI File
 ## 01.01 MRI File Hierarchy 
 
-The data generated of the scan have a basic structure, which is also reflect on the file directory structure.
+The data generated from the scan has a basic structure, which is also reflect on the file directory structure.
 
 - **Study**
-	This corresponds to the complete scan session done to the patient. If the same patient have a new scan any other day, this is stored as new study. The **study_id** identifier is assigned to the study to allow a better identification, also is common to assign this identifier as the name for the folder.
+	This corresponds to the complete scan session done to the patient. If the same patient has a new scan any other day, this is stored as new study. The **study_id** identifier is assigned to the study to allow a better identification, also is common to assign this identifier as the name for the folder.
 
 - **Series**
 	Refers to one scan in the same study, so we can have many different series in the same study. An example of this can be seen in the image below, as the plane determines a new series, but also the relaxation parameters (T1, T2, ...). Also the identifier **series_id** is assigned to each series and is commonly used to name the file folder of the series.
 
 - **Instance number**
-	he body is scanned in slices which later on are stacked to complete the full representation of the body. Each slice is stored as a file and identification number called **instance_number** is assigned to each to also stablish a sequence.
+	The body is scanned in slices which later on are stacked to complete the full representation of the body. Each slice is stored as a file and the identification number called **instance_number** is assigned to each slice to stablish a sequence.
 
 | <img src="PydicomImages/mri_image_file_structure.png" width=270 style="background-color:white"/> | <img src="PydicomImages/mri_file_hierarchy.png" width=225 style="background-color:white"/> |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
@@ -23,16 +23,16 @@ The data generated of the scan have a basic structure, which is also reflect on 
 Each MRI file is composed of metadata which are attributes used to have the complete information of the scan in the 3D space of the study.
 There are several attributes but in the following list I explain the basic ones used in machine learning.
 
-| Metadata                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Visual Representation                                                                                |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **Study Instance UID**<br><br>Known as Study ID, corresponds to the identifier assigned to the complete scan session done to the patient.<br>                                                                                                                                                                                                                                                                                                                                    | 4003253                                                                                              |
-| **Series Instance UID**<br><br>Known as Series ID, corresponds to the identifier assigned to the 3D scan made under a unique combination of parameters. For example the scan done of the axial view can be 1 series.                                                                                                                                                                                                                                                             | 4003253.702807833                                                                                    |
-| **Instance Number**<br><br>Identifier assigned to one slice of a scan, so it determines the sequence of images in which the stack has to be ordered to complete the 3D image.                                                                                                                                                                                                                                                                                                    | <img src="PydicomImages/mri_meta_instance_number.png" width=200 style="background-color:white"/>     |
-| **Series Description**<br><br>Refers to the **relaxation parameter** which is a classification for a complete series. This classifies the contrasts of the images applied to visually remark the different pathologies.                                                                                                                                                                                                                                                          | T1, T2, ...                                                                                          |
-| **Pixel Array**<br><br>Corresponds to the matrixial representation of the slice image. Used to generate the image and to feed our model after some preprocessing methods.                                                                                                                                                                                                                                                                                                        | <img src="PydicomImages/mri_meta_array.png" width=270 style="background-color:white"/>               |
-| **Image Position Patient**<br><br>This attribute is the coordinate of the middle point of the top left pixel respect the 3D space of the scan (respect to 1 series). So, this coordinate give us the space location of our slice.<br>                                                                                                                                                                                                                                            | <img src="PydicomImages/mri_meta_position_patient.png" width=270 style="background-color:white"/>    |
-| **Image Orientation Patient**<br><br>This attribute has 2 orthogonal basis vectors of the 3D space of the scan (respect to 1 series). With those 2 vectors we can transform any point in the image to a coordinate in the 3D space.<br><br>The value in this attribute stores both basis vectors $\color{red}{\textsf{V1}}$ and $\color{green}{\textsf{V2}}$, one after the other like this:<br>\[$\color{red}{\textsf{v1x,v1y,v1z}}$,$\color{green}{\textsf{v2x,v2y,v2z}}$]<br> | <img src="PydicomImages/mri_meta_orientation_patient.png" width=270 style="background-color:white"/> |
-| **Spacing Between Slices**<br><br>Corresponds to the space between the image slices in mm.                                                                                                                                                                                                                                                                                                                                                                                       |                                                                                                      |
+| Metadata                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Visual Representation                                                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **Study Instance UID**<br><br>Known as Study ID, corresponds to the identifier assigned to the complete scan session done to the patient.<br>                                                                                                                                                                                                                                                                                                                                                                                            | 4003253                                                                                              |
+| **Series Instance UID**<br><br>Known as Series ID, corresponds to the identifier assigned to the 3D scan made under a unique combination of parameters. For example the scan done of the axial view can be 1 series.                                                                                                                                                                                                                                                                                                                     | 4003253.702807833                                                                                    |
+| **Instance Number**<br><br>Identifier assigned to one slice of a scan, so it determines the sequence of images in which the stack has to be ordered to complete the 3D image.                                                                                                                                                                                                                                                                                                                                                            | <img src="PydicomImages/mri_meta_instance_number.png" width=200 style="background-color:white"/>     |
+| **Series Description**<br><br>Refers to the **relaxation parameter** which is a classification for a complete series. This classifies the contrasts of the images applied to visually remark the different pathologies.                                                                                                                                                                                                                                                                                                                  | T1, T2, ...                                                                                          |
+| **Pixel Array**<br><br>Corresponds to the matrix representation of the slice image. Used to generate the image and to feed our model after some preprocessing methods.                                                                                                                                                                                                                                                                                                                                                                   | <img src="PydicomImages/mri_meta_array.png" width=270 style="background-color:white"/>               |
+| **Image Position Patient**<br><br>This attribute is the(x, y, z) coordinates of the center of the first pixel (upper left-hand corner of the image) in the patient's coordinate system (3D space). The patient's coordinate is always the same respect to 1 series. So, this coordinate give us the space location of our slice.<br>                                                                                                                                                                                                     | <img src="PydicomImages/mri_meta_position_patient.png" width=270 style="background-color:white"/>    |
+| **Image Orientation Patient**<br><br>This attribute defines 2 orthogonal basis vectors that describes the image plane orientation in the patient's 3D coordinate system. Using these vectors together with Image Position Patient, any pixel in the 2D image can be mapped to a coordinate in 3D space.<br><br>The value in this attribute stores both basis vectors $\color{red}{\textsf{V1}}$ and $\color{green}{\textsf{V2}}$, one after the other like this:<br>\[$\color{red}{v1_x,v1_y,v1_z}$,$\color{green}{v2_x,v2_y,v2_z}$]<br> | <img src="PydicomImages/mri_meta_orientation_patient.png" width=270 style="background-color:white"/> |
+| **Spacing Between Slices**<br><br>Corresponds to the space between the image slices in mm.                                                                                                                                                                                                                                                                                                                                                                                                                                               |                                                                                                      |
 
 
 ## 01.03 DICOM Dictionary
@@ -232,7 +232,7 @@ When working with this images with machine learning, there are different possibi
 ### 05.01.01 2D slice processing
 As in common computer vision image classification problems, we can process the scan images as individuality in its matrixial representation.
 
-This option consumes less GPU but losses features about the context.
+This option uses less GPU but loses contextual features.
 
 <img src="PydicomImages/mri_process_opt_2d.png" width=170 style="background-color:white" />
 
@@ -286,7 +286,7 @@ class MRIDataset2D(Dataset):
         if self.transform:
             pass
              
-        #Label Encodeing ----------------------------------------------------
+        #Label Encoding ----------------------------------------------------
         if self.labels:
             label_idx = self.class_idx_map[label]
             label_tensor = torch.tensor(label_idx).clone().detach().long()
@@ -345,7 +345,7 @@ class MRIDataset2D(Dataset):
 ```
 
 ### 05.01.02 3D volume processing
-Is possible to stack the images to work with the volumetric representation. Like this we will work with the stack of arrays as a tensor.
+It is possible to stack the images to work with the volumetric representation. Like this we will work with the stack of arrays as a tensor.
 
 This is more GPU demanding but preserve more information.
 
@@ -469,9 +469,9 @@ class MRIDataset3D(Dataset):
 ```
 
 ### 05.01.03 2.5D arrangement
-Any variance respect to the 3D volume processing is called 2.5D, as some information is not considered.
+Any variation from full 3D volume processing is often called 2.5D, as some information is not considered.
 
-In the image below, are selected only the most relevant slices so we do not have the complete volume, but by doing this we are reducing noise. Also, the axial view is included to add more information. This changes are made to achieve a better balance between GPU demand and information preservation.
+In the image below, are selected only the most relevant slices so we do not have the complete volume, but by doing this we are reducing noise. Also, the axial view is included to add more information. These changes are made to achieve a better balance between GPU demand and information preservation.
 
 <img src="PydicomImages/mri_process_opt_25d.png" width=370 style="background-color:white"/>
 
